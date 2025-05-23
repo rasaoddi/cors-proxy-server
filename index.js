@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
-const bodyParser = require('body-parser');
+const express = require("express");
+const cors = require("cors");
+const axios = require("axios");
+const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,18 +9,19 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/', async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const { prompt, aspect_ratio } = req.body;
+
     const response = await axios.post(
-      "https://rasatest.app.n8n.cloud/webhook/generate-image",
+      "https://rasatest.app.n8n.cloud/webhook/generate-image", // ✅ Webhook واقعی Production
       { prompt, aspect_ratio },
       { headers: { "Content-Type": "application/json" } }
     );
 
     res.json(response.data);
   } catch (error) {
-    console.error("Proxy Error:", error.response?.data || error.message);
+    console.error("Proxy Error:", error?.response?.data || error.message);
     res.status(500).json({ error: "Error in workflow" });
   }
 });
