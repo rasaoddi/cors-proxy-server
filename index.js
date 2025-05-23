@@ -6,10 +6,11 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// مهم: این دقیقاً همونه که Netlify استفاده می‌کنه
 const corsOptions = {
-  origin: "*", // اگر فقط Netlify مدنظرته، اینو بذار: ['https://tangerine-crostata-fac714.netlify.app']
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type"
+  origin: "https://tangerine-crostata-fac714.netlify.app",
+  methods: ["POST"],
+  allowedHeaders: ["Content-Type"],
 };
 
 app.use(cors(corsOptions));
