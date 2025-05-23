@@ -13,7 +13,7 @@ app.post('/', async (req, res) => {
   try {
     const { prompt, aspect_ratio } = req.body;
     const response = await axios.post(
-      "https://rasatest.app.n8n.cloud/webhook-test/generate-image",
+      "https://rasatest.app.n8n.cloud/webhook/generate-image",
       { prompt, aspect_ratio },
       { headers: { "Content-Type": "application/json" } }
     );
