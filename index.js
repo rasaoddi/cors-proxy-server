@@ -6,15 +6,13 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔥 فعال کردن CORS به صورت کامل و دستی
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // یا فقط 'https://mz08c8.webwave.dev'
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  if (req.method === "OPTIONS") return res.sendStatus(200);
-  next();
-});
+const corsOptions = {
+  origin: "*", // اگر فقط Netlify مدنظرته، اینو بذار: ['https://tangerine-crostata-fac714.netlify.app']
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type"
+};
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.post("/", async (req, res) => {
@@ -29,11 +27,11 @@ app.post("/", async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    console.error("Proxy Error:", error.response?.data || error.message);
+    console.error("Proxy Error:", error?.response?.data || error.message);
     res.status(500).json({ error: "Error in workflow" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Proxy server running on port ${PORT}`);
+  console.log(`Proxy server running on port ${PORT}`);
 });
