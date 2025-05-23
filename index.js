@@ -6,23 +6,22 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); // مهم
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/', async (req, res) => {
   try {
     const { prompt, aspect_ratio } = req.body;
-
     const response = await axios.post(
-      'https://rasatest.app.n8n.cloud/webhook/generate-image',
+      "https://rasatest.app.n8n.cloud/webhook/generate-image",
       { prompt, aspect_ratio },
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { "Content-Type": "application/json" } }
     );
 
     res.json(response.data);
   } catch (error) {
-    console.error('Proxy Error:', error?.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to forward request' });
+    console.error("Proxy Error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Error in workflow" });
   }
 });
 
